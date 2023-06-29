@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 
-const Tabs = (props) => {
-  const { arr } = props;
-  const [state, setState] = useState(arr[0].content);
+const Tabs = ({ tabs }) => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   return (
-    <>
-      <ul>
-        {arr.map((item) => {
-          return (
+    <div>
+      <div className="tab-list">
+        <ul>
+          {tabs.map((tab, index) => (
             <li
-              onClick={() => {
-                setState(item.content);
-              }}
+              key={index === activeTab ? "active" : ""}
+              onClick={() => handleTabClick(index)}
             >
-              {item.title}
+              {tab.title}
             </li>
-          );
-        })}
-      </ul>
-      <p>{state}</p>
-    </>
+          ))}
+        </ul>
+      </div>
+      <div className="tab-content">{tabs[activeTab].content}</div>
+    </div>
   );
 };
-
 export default Tabs;
